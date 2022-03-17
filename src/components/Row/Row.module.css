@@ -1,0 +1,22 @@
+.table-block{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.table-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table-cell{
+    margin: 10px;
+    width: 100px;
+    height: 40px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.table-row:hover {
+    border: 1px solid black;
+}

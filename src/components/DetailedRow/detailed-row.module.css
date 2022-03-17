@@ -1,0 +1,17 @@
+.detailedRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    margin: 0 auto;
+}
+.detailedRowRate{
+    width: 150px;
+    text-align: left;
+    padding: 10px;
+}
+.detailedRowDate{
+    padding: 10px;
+    width: 150px;
+    text-align: left;
+}

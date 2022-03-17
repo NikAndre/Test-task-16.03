@@ -1,25 +1,62 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import { Row } from './components/Row/Row'
+import {Tooltip} from "./components/Tooltip/Tooltip";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [currency, setCurrency] = useState([]);
+    const [tooltipProps, setTooltipProps] = useState(null);
+
+    const fetchCurrency = async () => {
+        const response = await fetch('https://www.cbr-xml-daily.ru/daily_json.js')
+            .then(response => response.json())
+            .then((data) => {
+                const jsx = []
+                const arr = Object.values(data.Valute)
+                arr.forEach((elem) => {
+                    jsx.push(elem)
+                })
+                setCurrency(jsx)
+            });
+    };
+
+    useEffect(() => {
+        fetchCurrency();
+    }, [])
+
+    const onMouseOver = (event, currency) => {
+        if (event.target.className === 'table-cell') {
+            event.target.classList.add('cell-hover')
+        };
+        setTooltipProps({
+            x: event.pageX,
+            y: event.pageY + 12,
+            currency
+        });
+    };
+    const onMouseOut = (event, currency) => {
+        setTooltipProps(null);
+    };
+
+
+    const array = [...currency].map((elem) => {
+        return <Row
+            currency={elem}
+            onMouseOver={onMouseOver}
+            onMouseOut={onMouseOut}
+        />
+    });
+
+    return (
+        <div className="App">
+          <div className='row-block'>
+                {array}
+          </div>
+            <Tooltip points={tooltipProps} />
+        </div>
+    );
 }
 
 export default App;
+
+
